@@ -5,9 +5,12 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear any stored user session or state here if applicable
     navigate("/admin-login");
   };
+  const linkClass = ({ isActive }) =>
+    `nav-link d-flex align-items-center mb-3 ${
+      isActive ? "active text-primary" : "text-white"
+    }`;
 
   return (
     <div
@@ -48,37 +51,21 @@ const Navbar = () => {
           <span style={{ fontWeight: "700", fontSize: "1.5rem" }}>Votechain</span>
         </div>
         <nav className="nav flex-column">
-          <NavLink
-            to="/admin"
-            className={({ isActive }) =>
-              "nav-link d-flex align-items-center mb-3" + (isActive ? " active text-primary" : " text-white")
-            }
-            style={{ fontSize: "1.1rem" }}
-          >
+          <NavLink to="/admin" end className={linkClass} style={{ fontSize: "1.1rem" }}>
             <i className="bi bi-sliders me-2"></i> Dashboard
           </NavLink>
-          <NavLink
-            to="/admin/candidates"
-            className={({ isActive }) =>
-              "nav-link d-flex align-items-center mb-3" + (isActive ? " active text-primary" : " text-white")
-            }
-            style={{ fontSize: "1.1rem" }}
-          >
+          <NavLink to="/admin/candidates" className={linkClass} style={{ fontSize: "1.1rem" }}>
             <i className="bi bi-person-plus me-2"></i> Candidate
           </NavLink>
-          <NavLink
-            to="/admin/election"
-            className={({ isActive }) =>
-              "nav-link d-flex align-items-center mb-3" + (isActive ? " active text-primary" : " text-white")
-            }
-            style={{ fontSize: "1.1rem" }}
-          >
+          <NavLink to="/admin/election" className={linkClass} style={{ fontSize: "1.1rem" }}>
             <i className="bi bi-bank me-2"></i> Election Commission
           </NavLink>
         </nav>
       </div>
       <div>
-        <button className="btn btn-link text-danger mt-3 p-0" onClick={handleLogout}>Log out <i className="bi bi-box-arrow-right"></i></button>
+        <button className="btn btn-link text-danger mt-3 p-0" onClick={handleLogout}>
+          Log out <i className="bi bi-box-arrow-right"></i>
+        </button>
       </div>
     </div>
   );
