@@ -17,6 +17,7 @@ contract Election {
     uint public candidatesCount;
 
     event votedEvent(uint indexed _candidateId);
+    event electionEndedEvent(uint totalVotes, uint winnerId, string winnerName, uint winnerVotes);
 
     constructor() public {
         admin = msg.sender;
@@ -24,12 +25,11 @@ contract Election {
         addCandidate("Candidate 2");
     }
 
-   function addCandidate(string memory _name) public {
-    require(msg.sender == admin, "Only admin can add candidates");
-    candidatesCount++;
-    candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
-}
-
+    function addCandidate(string memory _name) public {
+        require(msg.sender == admin, "Only admin can add candidates");
+        candidatesCount++;
+        candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
+    }
 
     function startVoting() public {
         require(msg.sender == admin, "Only admin can start the election");
@@ -39,6 +39,12 @@ contract Election {
     function endVoting() public {
         require(msg.sender == admin, "Only admin can end the election");
         electionStarted = false;
+        
+        // Emit election ended event
+        (uint winnerId, string memory winnerName, uint winnerVotes) = getElectionResults();
+        uint totalVotes = getTotalVotes();
+        
+        emit electionEndedEvent(totalVotes, winnerId, winnerName, winnerVotes);
     }
 
     function vote(uint _candidateId) public payable {
@@ -53,5 +59,31 @@ contract Election {
 
         admin.transfer(msg.value);
         emit votedEvent(_candidateId);
+    }
+
+    function getElectionResults() public view returns (uint, string memory, uint) {
+        require(!electionStarted, "Election is still active");
+        
+        uint maxVotes = 0;
+        uint winnerId = 0;
+        string memory winnerName = "";
+        
+        for (uint i = 1; i <= candidatesCount; i++) {
+            if (candidates[i].voteCount > maxVotes) {
+                maxVotes = candidates[i].voteCount;
+                winnerId = candidates[i].id;
+                winnerName = candidates[i].name;
+            }
+        }
+        
+        return (winnerId, winnerName, maxVotes);
+    }
+
+    function getTotalVotes() public view returns (uint) {
+        uint total = 0;
+        for (uint i = 1; i <= candidatesCount; i++) {
+            total += candidates[i].voteCount;
+        }
+        return total;
     }
 }
