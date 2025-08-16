@@ -8800,12 +8800,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xEA067b41058E54cc7de6e3AaA055DFC93fdA237c",
-      "transactionHash": "0xc3765791c02387aac0d85644b821d64507bbe2cadc433195de770b3779608eed"
+      "address": "0x7CC2ACDB2EB3E308a14ecE74b85f9E531FbC97e2",
+      "transactionHash": "0x2cce201f3483c3e23939a53f213f9853aebb46a94cad407d333d029d89055692"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-08-15T16:02:23.542Z",
+  "updatedAt": "2025-08-16T13:01:30.211Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

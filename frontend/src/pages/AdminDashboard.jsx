@@ -33,7 +33,7 @@ const AdminDashboard = () => {
         setCandidates(list);
         setTotalVotes(totalVoteCount);
 
-        // Assuming electionEnded is true if electionStarted is false
+       
         const started = await electionInstance.methods.electionStarted().call();
         setElectionEnded(!started);
 

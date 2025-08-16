@@ -68,9 +68,6 @@ async function pollEvents() {
       const valueEth = Number(web3.utils.fromWei(tx.value, "ether"));
       totalEthReceived += valueEth;
       console.log("🎉 Nouveau vote détecté !");
-      console.log(`🗳️ Candidat ID : ${event.returnValues._candidateId}`);
-      console.log(`💰 Montant envoyé : ${valueEth} ETH`);
-      console.log(`📊 Total ETH reçu jusqu’ici : ${totalEthReceived.toFixed(4)} ETH`);
     }
 
     // Écoute de la fin d'élection
@@ -80,7 +77,6 @@ async function pollEvents() {
     });
 
     for (const event of endEvents) {
-      // Vérifier si l'élection a déjà été sauvegardée
       const existingElection = await Election.findOne({
         winner: {
           name: event.returnValues.winnerName,
@@ -91,8 +87,6 @@ async function pollEvents() {
 
       if (!existingElection && !electionEnded) {
         console.log("🏁 Élection terminée !");
-        console.log("📅 Date :", new Date().toLocaleString());
-        console.log("👑 Gagnant :", event.returnValues.winnerName);
 
         const candidates = await getAllCandidates();
 
@@ -114,7 +108,7 @@ async function pollEvents() {
       }
     }
 
-    // Mettre à jour le dernier bloc vérifié
+   
     lastCheckedBlock = latestBlock;
 
   } catch (err) {

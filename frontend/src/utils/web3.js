@@ -16,7 +16,6 @@ const initWeb3 = async () => {
     // Listen for account changes and update account variable
     window.ethereum.on("accountsChanged", (accounts) => {
       account = accounts[0];
-      // Instead of reloading the page, call the callback if provided
       if (accountChangeCallback) {
         accountChangeCallback(account);
       }
