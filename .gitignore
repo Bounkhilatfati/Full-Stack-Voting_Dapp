@@ -24,3 +24,5 @@ pnpm-debug.log*
 # OS-specific
 .DS_Store
 Thumbs.db
+# Ignore contract artifacts copied to frontend
+/frontend/src/contracts/Election.json
